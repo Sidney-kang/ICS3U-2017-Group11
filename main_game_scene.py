@@ -1,5 +1,5 @@
 # Created by:Sidney Kang
-# Created on: Ded 2016
+# Created on: Dec 2016
 # Created for: ICS3U
 # This scene shows the main game.
 
@@ -13,7 +13,7 @@ class MainGameScene(Scene):
         
         # add background color
         self.background = SpriteNode(position = self.size / 2, 
-                                     color = 'white', 
+                                     color = 'blue', 
                                      parent = self, 
                                      size = self.size)
     
