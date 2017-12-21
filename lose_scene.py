@@ -13,7 +13,7 @@ class LoseScene(Scene):
         
         # add background color
         self.background = SpriteNode(position = self.size / 2, 
-                                     color = 'white', 
+                                     color = 'blue', 
                                      parent = self, 
                                      size = self.size)
     
