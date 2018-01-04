@@ -14,7 +14,16 @@ from main_menu_scene import *
 class CompanyLogoScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
-        
+        self.background = SpriteNode(position = self.size / 2, 
+                                     color = ('black'), 
+                                     parent = self, 
+                                     size = self.size)
+        # add background color
+        self.company_logo = SpriteNode('./assets/sprites/company_logo.PNG',
+        	                           position = self.size / 2, 
+                                     parent = self, 
+                                     size = self.size/1.1)
+                                     
         # create timer, so that after 2 seconds move to next scene
         self.start_time = time.time()
 
@@ -23,7 +32,7 @@ class CompanyLogoScene(Scene):
         # this method is called, hopefully, 60 times a second
         
         # after 2 seconds, move to main menu scene
-        if not self.presented_scene and time.time() - self.start_time > 1:
+        if not self.presented_scene and time.time() - self.start_time > 2:
             self.present_modal_scene(MainMenuScene())
     
     def touch_began(self, touch):
