@@ -1,4 +1,4 @@
-# Created by: Mr. Coxall
+# Created by: Sidney Kang
 # Created on: Sep 2016
 # Created for: ICS3U
 # This scene shows the settings.
