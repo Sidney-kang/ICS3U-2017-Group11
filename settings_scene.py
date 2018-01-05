@@ -32,27 +32,27 @@ class SettingsScene(Scene):
         bush_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         bush_position.x = self.size_of_screen_x - 100                           
         self.bush = SpriteNode('./assets/sprites/bush.PNG',
-                                       parent = self, 
-                                       position = bush_position,
-                                       scale = 0.45)       
+                               parent = self, 
+                               position = bush_position,
+                               scale = 0.45)       
        
         # add bush for background                                
         bush_2_position = Vector2()
         bush_2_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         bush_2_position.x = (self.size_of_screen_x - (2 * (self.center_of_screen_x))) + 100                               
         self.bush_2 = SpriteNode('./assets/sprites/bush.PNG',
-                                       parent = self, 
-                                       position = bush_2_position,
-                                       scale = 0.45)     
+                                 parent = self, 
+                                 position = bush_2_position,
+                                 scale = 0.45)     
         
         # Creates home button                                                              
         back_arrow_button_position = Vector2()
         back_arrow_button_position.y = self.size_of_screen_y - 90
         back_arrow_button_position.x = (self.size_of_screen_x - (2 * (self.center_of_screen_x))) + 80                   
         self.back_arrow_button = SpriteNode('./assets/sprites/back_arrow_button.PNG',
-                                       parent = self, 
-                                       position = back_arrow_button_position,
-                                       scale = 0.25)            
+                                            parent = self, 
+                                            position = back_arrow_button_position,
+                                            scale = 0.25)            
                                        
         music_button_position = Vector2()
         music_button_position.y = self.size_of_screen_y - 300
@@ -66,41 +66,41 @@ class SettingsScene(Scene):
         no_music_button_position.y = self.size_of_screen_y - 300
         no_music_button_position.x = self.center_of_screen_x - 150                
         self.no_music_button = SpriteNode('./assets/sprites/no_volume_button.PNG',
-                                       parent = self, 
-                                       position = no_music_button_position,
-                                       scale = 0.15)    
+                                          parent = self, 
+                                          position = no_music_button_position,
+                                          scale = 0.15)    
                                        
         sound_effects_button_position = Vector2()
         sound_effects_button_position.y = self.center_of_screen_y - 150
         sound_effects_button_position.x = self.center_of_screen_x - 360                  
         self.sound_effects_button = SpriteNode('./assets/sprites/volume_button.PNG',
-                                       parent = self, 
-                                       position = sound_effects_button_position,
-                                       scale = 0.15)                  
+                                               parent = self, 
+                                               position = sound_effects_button_position,
+                                               scale = 0.15)                  
                                        
         no_sound_effects_button_position = Vector2()
         no_sound_effects_button_position.y = self.center_of_screen_y - 150
         no_sound_effects_button_position.x = self.center_of_screen_x - 150                  
         self.no_sound_effects_button = SpriteNode('./assets/sprites/no_volume_button.PNG',
-                                       parent = self, 
-                                       position = no_sound_effects_button_position,
-                                       scale = 0.15)                    
+                                                  parent = self, 
+                                                  position = no_sound_effects_button_position,
+                                                  scale = 0.15)                    
                                        
         boy_button_position = Vector2()
         boy_button_position.y = self.size_of_screen_y - 310
         boy_button_position.x = self.size_of_screen_x - 155             
         self.boy_button = SpriteNode('./assets/sprites/boy_button.PNG',
-                                       parent = self, 
-                                       position = boy_button_position,
-                                       scale = 0.3)   
+                                     parent = self, 
+                                     position = boy_button_position,
+                                     scale = 0.3)   
                                        
         girl_button_position = Vector2()
         girl_button_position.y = self.size_of_screen_y - 310
         girl_button_position.x = self.center_of_screen_x + 145              
         self.girl_button = SpriteNode('./assets/sprites/girl_button.PNG',
-                                       parent = self, 
-                                       position = girl_button_position,
-                                       scale = 0.3)    
+                                      parent = self, 
+                                      position = girl_button_position,
+                                      scale = 0.3)    
                                                                           
         settings_title_position = Vector2()
         settings_title_position.y = self.center_of_screen_y + 270
