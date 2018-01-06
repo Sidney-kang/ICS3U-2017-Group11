@@ -25,47 +25,55 @@ class MainMenuScene(Scene):
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
         	                           position = self.size / 2, 
                                      parent = self, 
-                                     size = self.size)
+                                     size = self.size)                                                                         
                                      
         bush_position = Vector2()
         bush_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         bush_position.x = self.size_of_screen_x - 100                           
         self.bush = SpriteNode('./assets/sprites/bush.PNG',
-                                       parent = self, 
-                                       position = bush_position,
-                                       scale = 0.45)       
+                               parent = self, 
+                               position = bush_position,
+                               scale = 0.45)       
                                        
         bush_2_position = Vector2()
         bush_2_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         bush_2_position.x = (self.size_of_screen_x - (2 * (self.center_of_screen_x))) + 100                               
         self.bush_2 = SpriteNode('./assets/sprites/bush.PNG',
-                                       parent = self, 
-                                       position = bush_2_position,
-                                       scale = 0.45)                               
+                                 parent = self, 
+                                 position = bush_2_position,
+                                 scale = 0.45)                               
+                                     
+        game_logo_position = Vector2()
+        game_logo_position.y = self.center_of_screen_y + 50
+        game_logo_position.x = self.center_of_screen_x + 100                          
+        self.game_logo = SpriteNode('./assets/sprites/game_logo.PNG',
+                                    parent = self, 
+                                    position = game_logo_position,
+                                    scale = 0.45)                                
                                      
         start_button_position = Vector2()
-        start_button_position.y = self.center_of_screen_y - 100 
-        start_button_position.x = self.center_of_screen_x 
+        start_button_position.y = self.center_of_screen_y - 130
+        start_button_position.x = self.center_of_screen_x - 60
         self.start_button = SpriteNode('./assets/sprites/start_button.PNG',
                                        parent = self,
                                        position = start_button_position,
-                                       scale = 0.3)        
+                                       scale = 0.23)        
                                        
         settings_button_position = Vector2()
         settings_button_position.y = self.center_of_screen_y - 200
-        settings_button_position.x = self.center_of_screen_x 
+        settings_button_position.x = self.center_of_screen_x - 60
         self.settings_button = SpriteNode('./assets/sprites/settings_button.PNG',
                                           parent = self,
                                           position = settings_button_position,
-                                          scale = 0.3)      
+                                          scale = 0.23)      
                                           
         credits_button_position = Vector2()
-        credits_button_position.y = self.center_of_screen_y - 300
-        credits_button_position.x = self.center_of_screen_x 
+        credits_button_position.y = self.center_of_screen_y - 270
+        credits_button_position.x = self.center_of_screen_x - 60
         self.credits_button = SpriteNode('./assets/sprites/credits_button.PNG',
-                                          parent = self,
-                                          position = credits_button_position,
-                                          scale = 0.3)                                                                                                                                         
+                                         parent = self,
+                                         position = credits_button_position,
+                                         scale = 0.23)                                                                                                                                         
                                                                                                                                                                                                                                                                                                                                                             
     
     def update(self):
