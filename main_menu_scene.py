@@ -93,11 +93,11 @@ class MainMenuScene(Scene):
         pass
         
         if self.settings_button.frame.contains_point(touch.location):
-             self.present_modal_scene(SettingsScene())
+           self.present_modal_scene(SettingsScene())
         if self.credits_button.frame.contains_point(touch.location):
-             self.present_modal_scene(CreditsScene())
+           self.present_modal_scene(CreditsScene())
         if self.start_button.frame.contains_point(touch.location):
-             self.present_modal_scene(LevelsScene())
+           self.present_modal_scene(LevelsScene())
     
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
