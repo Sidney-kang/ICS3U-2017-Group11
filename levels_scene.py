@@ -1,4 +1,4 @@
-# Created by: Mr. Coxall
+# Created by: Sidney Kang
 # Created on: Sep 2016
 # Created for: ICS3U
 # This scene shows the levels scene.
@@ -16,7 +16,6 @@ class LevelsScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
         
-        #self.level_difficulty = 0
         self.score_position = Vector2()
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
@@ -27,7 +26,7 @@ class LevelsScene(Scene):
            sound.set_volume(50)
         elif SettingsScene.SoundEffectsOn == False:
            sound.set_volume(0)
-           
+
         if SettingsScene.MusicOn == True:
            SettingsScene.MainMenuMusic.play()
         elif SettingsScene.MusicOn == False:
@@ -38,7 +37,7 @@ class LevelsScene(Scene):
         	                           position = self.size / 2, 
                                      parent = self, 
                                      size = self.size)
-        
+
         # add bush on right                                                          
         bush_position = Vector2()
         bush_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
@@ -56,7 +55,7 @@ class LevelsScene(Scene):
                                  parent = self, 
                                  position = bush_2_position,
                                  scale = 0.45)     
-                                       
+
         home_button_position = Vector2()
         home_button_position.y = self.size_of_screen_y - 70
         home_button_position.x = (self.size_of_screen_x - (2 * (self.center_of_screen_x))) + 100                   
@@ -64,7 +63,7 @@ class LevelsScene(Scene):
                                       parent = self, 
                                       position = home_button_position,
                                       scale = 0.25)                                                                                                                                                                               
-                                                                          
+
         levels_title_position = Vector2()
         levels_title_position.y = self.center_of_screen_y + 270
         levels_title_position.x = self.center_of_screen_x                      
@@ -72,7 +71,7 @@ class LevelsScene(Scene):
                                        parent = self, 
                                        position = levels_title_position,
                                        scale = 0.45)                              
-        
+ 
         level_1_position = Vector2()
         level_1_position.y = self.center_of_screen_y 
         level_1_position.x = self.center_of_screen_x - 350                            
@@ -80,7 +79,7 @@ class LevelsScene(Scene):
                                   parent = self, 
                                   position = level_1_position,
                                   scale = 0.4)
-                                       
+
         level_2_position = Vector2()
         level_2_position.y = self.center_of_screen_y 
         level_2_position.x = self.center_of_screen_x                             
@@ -88,7 +87,7 @@ class LevelsScene(Scene):
                                   parent = self, 
                                   position = level_2_position,
                                   scale = 0.4) 
-                                        
+
         level_3_position = Vector2()
         level_3_position.y = self.center_of_screen_y 
         level_3_position.x = self.center_of_screen_x + 350                            
@@ -96,7 +95,7 @@ class LevelsScene(Scene):
                                   parent = self, 
                                   position = level_3_position,
                                   scale = 0.4)                               
-                                                                                       
+
     def update(self):
         # this method is called, hopefully, 60 times a second
         pass
