@@ -17,10 +17,6 @@ class SettingsScene(Scene):
     MusicOn = True
     SoundEffectsOn = True
     MainMenuMusic = sound.Player('assets/sounds/main_menu_music.mp3')
-	
-   # def __init__(self):
-      # self.character_gender = './assets/sprites/boy_thief.PNG'
-    
        
     def setup(self):
         # this method is called, when user moves to this scene
@@ -32,7 +28,6 @@ class SettingsScene(Scene):
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.girl_button_down = False
         self.boy_button_down = False
-        # self.scale_size = 0.45
         self.button_click = sound.play_effect('casino:ChipLay2', 50)
         
         self.touched_once = False
@@ -203,9 +198,9 @@ class SettingsScene(Scene):
            robber_position.y = self.center_of_screen_y - 150
            robber_position.x = self.center_of_screen_x + 260              
            self.robber = SpriteNode(SettingsScene.GenderType,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.15)
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.15)
            self.girl_button_down == False                     
            #return self.character_gender                        
         elif not self.touched_once == True and self.girl_button_down == True:      
@@ -215,9 +210,9 @@ class SettingsScene(Scene):
            robber_position.y = self.center_of_screen_y - 150
            robber_position.x = self.center_of_screen_x + 260              
            self.robber = SpriteNode(SettingsScene.GenderType,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.15)  
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.15)  
            self.girl_button_down == False                     
            #return self.character_gender                    
         if self.touched_once == True and self.girl_button_down == False:  
@@ -227,9 +222,9 @@ class SettingsScene(Scene):
            robber_position.y = self.center_of_screen_y - 150
            robber_position.x = self.center_of_screen_x + 260              
            self.robber = SpriteNode(SettingsScene.GenderType,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.135) 
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.135) 
                                  
            #return self.character_gender                                                                         
         elif not self.touched_once == True and self.girl_button_down == False:           
@@ -239,11 +234,10 @@ class SettingsScene(Scene):
            robber_position.y = self.center_of_screen_y - 150
            robber_position.x = self.center_of_screen_x + 260                
            self.robber = SpriteNode(SettingsScene.GenderType,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.135)  
-           #return self.character_gender        
-    
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.135)  
+
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
@@ -260,7 +254,6 @@ class SettingsScene(Scene):
         if self.no_music_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            SettingsScene.MainMenuMusic.pause()
-          # MainGameScene.MainGameMusic.pause() 
            SettingsScene.MusicOn = False
         if self.sound_effects_button.frame.contains_point(touch.location):     
            sound.set_volume(50)     
@@ -269,8 +262,7 @@ class SettingsScene(Scene):
         if self.no_sound_effects_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            sound.set_volume(0)
-           SettingsScene.SoundEffectsOn = False
-           
+           SettingsScene.SoundEffectsOn = False           
            
         if self.girl_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')

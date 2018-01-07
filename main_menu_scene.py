@@ -109,14 +109,11 @@ class MainMenuScene(Scene):
         
         if self.settings_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           #SettingsScene.MainMenuMusic.stop()
            self.present_modal_scene(SettingsScene())
         if self.credits_button.frame.contains_point(touch.location):
-          # SettingsScene.MainMenuMusic.stop()
            sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(CreditsScene())
         if self.start_button.frame.contains_point(touch.location):
-          # SettingsScene.MainMenuMusic.stop()
            sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(LevelsScene())
     
