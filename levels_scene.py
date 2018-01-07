@@ -22,7 +22,7 @@ class LevelsScene(Scene):
         self.size_of_screen_y = self.size.y
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
-        # self.scale_size = 0.45
+
         if SettingsScene.SoundEffectsOn == True:
            sound.set_volume(50)
         elif SettingsScene.SoundEffectsOn == False:
