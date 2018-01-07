@@ -4,6 +4,7 @@
 # This scene shows the main menu.
 
 from scene import *
+import sound
 import ui
 
 from levels_scene import *
@@ -20,6 +21,20 @@ class MainMenuScene(Scene):
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.scale_size = 0.4
+                
+        if SettingsScene.SoundEffectsOn == True:
+           sound.set_volume(50)
+        elif SettingsScene.SoundEffectsOn == False:
+           sound.set_volume(0)
+        
+        if SettingsScene.MusicOn == True:
+           SettingsScene.MainMenuMusic.play()
+        elif SettingsScene.MusicOn == False:
+           SettingsScene.MainMenuMusic.pause()
+        
+        #self.main_menu_music = sound.Player('assets/sounds/main_menu_music.mp3')
+        #self.main_menu_music.number_of_loops = -1
+        #self.main_menu_music.play()
         
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -93,10 +108,13 @@ class MainMenuScene(Scene):
         pass
         
         if self.settings_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(SettingsScene())
         if self.credits_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(CreditsScene())
         if self.start_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(LevelsScene())
     
     def did_change_size(self):

@@ -4,11 +4,20 @@
 # This scene shows the settings.
 
 from scene import *
+import sound
 import ui
 
-character_gender = './assets/sprites/boy_thief.PNG'
+#from main_game_scene import *
+#global character_gender
+#character_gender = './assets/sprites/boy_thief.PNG'
 
 class SettingsScene(Scene):
+	
+    GenderType  = './assets/sprites/boy_thief.PNG'
+    MusicOn = True
+    SoundEffectsOn = True
+    MainMenuMusic = sound.Player('assets/sounds/main_menu_music.mp3')
+       
     def setup(self):
         # this method is called, when user moves to this scene
         
@@ -17,9 +26,22 @@ class SettingsScene(Scene):
         self.size_of_screen_y = self.size.y
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
-        # self.scale_size = 0.45
+        self.girl_button_down = False
+        self.boy_button_down = False
+        self.button_click = sound.play_effect('casino:ChipLay2', 50)
         
         self.touched_once = False
+        
+        if SettingsScene.SoundEffectsOn == True:
+           sound.set_volume(50)
+        elif SettingsScene.SoundEffectsOn == False:
+           sound.set_volume(0)      
+        
+        if SettingsScene.MusicOn == True:
+           SettingsScene.MainMenuMusic.number_of_loops = -1
+           SettingsScene.MainMenuMusic.play()
+        elif SettingsScene.MusicOn == False:
+           SettingsScene.MainMenuMusic.pause()
         
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -114,7 +136,7 @@ class SettingsScene(Scene):
         music_label_position.y = self.size_of_screen_y - 200
         music_label_position.x = self.center_of_screen_x - 360                                                 
         self.music_label = LabelNode(text = 'Music',
-                                     font = ('Helvetica', 45),
+                                     font = ('Marker Felt', 45),
                                      color = 'black',
                                      parent = self,
                                      position = music_label_position)    
@@ -123,7 +145,7 @@ class SettingsScene(Scene):
         sound_effects_label_position.y = self.center_of_screen_y - 50
         sound_effects_label_position.x = self.center_of_screen_x - 285                                              
         self.sound_effects = LabelNode(text = 'Sound Effects',
-                                       font = ('Helvetica', 45),
+                                       font = ('Marker Felt', 45),
                                        color = 'black',
                                        parent = self,
                                        position = sound_effects_label_position)      
@@ -133,7 +155,7 @@ class SettingsScene(Scene):
         character_gender_label_position.y = self.size_of_screen_y - 200
         character_gender_label_position.x = self.size_of_screen_x - 260                                                
         self.character_gender = LabelNode(text = 'Choose Character',
-                                          font = ('Helvetica', 45),
+                                          font = ('Marker Felt', 45),
                                           parent = self,
                                           color = 'black',
                                           position = character_gender_label_position)                                                                                                                                                   
@@ -142,7 +164,7 @@ class SettingsScene(Scene):
         boy_label_position.y = self.size_of_screen_y - 415
         boy_label_position.x = self.size_of_screen_x - 155                                            
         self.boy = LabelNode(text = 'Boy',
-                             font = ('Helvetica', 35),
+                             font = ('Marker Felt', 35),
                              parent = self,
                              color = 'black',
                              position = boy_label_position) 
@@ -151,7 +173,7 @@ class SettingsScene(Scene):
         girl_label_position.y = self.size_of_screen_y - 415
         girl_label_position.x = self.center_of_screen_x + 145                                           
         self.girl = LabelNode(text = 'Girl',
-                              font = ('Helvetica', 35),
+                              font = ('Marker Felt', 35),
                               parent = self,
                               color = 'black',
                               position = girl_label_position)                                  
@@ -167,54 +189,89 @@ class SettingsScene(Scene):
     def touch_moved(self, touch):
         # this method is called, when user moves a finger around on the screen
         pass
-    
+        
+    def choose_character(self):#, self.character_gender = ''):
+        if self.touched_once == True and self.girl_button_down == True:  
+           self.robber.remove_from_parent()  
+           SettingsScene.GenderType = './assets/sprites/girl_thief.PNG'
+           robber_position = Vector2()
+           robber_position.y = self.center_of_screen_y - 150
+           robber_position.x = self.center_of_screen_x + 260              
+           self.robber = SpriteNode(SettingsScene.GenderType,
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.15)
+           self.girl_button_down == False                     
+           #return self.character_gender                        
+        elif not self.touched_once == True and self.girl_button_down == True:      
+           SettingsScene.GenderType = './assets/sprites/girl_thief.PNG'
+           self.touched_once = True
+           robber_position = Vector2()
+           robber_position.y = self.center_of_screen_y - 150
+           robber_position.x = self.center_of_screen_x + 260              
+           self.robber = SpriteNode(SettingsScene.GenderType,
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.15)  
+           self.girl_button_down == False                     
+           #return self.character_gender                    
+        if self.touched_once == True and self.girl_button_down == False:  
+           self.robber.remove_from_parent()  
+           SettingsScene.GenderType = './assets/sprites/boy_thief.PNG'
+           robber_position = Vector2()
+           robber_position.y = self.center_of_screen_y - 150
+           robber_position.x = self.center_of_screen_x + 260              
+           self.robber = SpriteNode(SettingsScene.GenderType,
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.135) 
+                                 
+           #return self.character_gender                                                                         
+        elif not self.touched_once == True and self.girl_button_down == False:           
+           SettingsScene.GenderType = './assets/sprites/boy_thief.PNG' 
+           self.touched_once = True           
+           robber_position = Vector2()
+           robber_position.y = self.center_of_screen_y - 150
+           robber_position.x = self.center_of_screen_x + 260                
+           self.robber = SpriteNode(SettingsScene.GenderType,
+                                    parent = self, 
+                                    position = robber_position,
+                                    scale = 0.135)  
+
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
         
         if self.back_arrow_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           #SettingsScene.MainMenuMusic.stop()
            self.dismiss_modal_scene()
+        
+        if self.music_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.play()
+           SettingsScene.MusicOn = True
+        if self.no_music_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.pause()
+           SettingsScene.MusicOn = False
+        if self.sound_effects_button.frame.contains_point(touch.location):     
+           sound.set_volume(50)     
+           sound.play_effect('8ve:8ve-tap-mellow')       
+           SettingsScene.SoundEffectsOn = True    
+        if self.no_sound_effects_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           sound.set_volume(0)
+           SettingsScene.SoundEffectsOn = False           
            
-        if self.girl_button.frame.contains_point(touch.location) and self.touched_once == True:  
-           self.robber.remove_from_parent()  
-           character_gender = './assets/sprites/girl_thief.PNG'
-           robber_position = Vector2()
-           robber_position.y = self.center_of_screen_y - 150
-           robber_position.x = self.center_of_screen_x + 260              
-           self.robber = SpriteNode(character_gender,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.15) 
-        elif self.girl_button.frame.contains_point(touch.location) and not self.touched_once == True:      
-           character_gender = './assets/sprites/girl_thief.PNG'
-           self.touched_once = True
-           robber_position = Vector2()
-           robber_position.y = self.center_of_screen_y - 150
-           robber_position.x = self.center_of_screen_x + 260              
-           self.robber = SpriteNode(character_gender,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.15)  
-        if self.boy_button.frame.contains_point(touch.location) and self.touched_once == True:  
-           self.robber.remove_from_parent()  
-           character_gender = './assets/sprites/boy_thief.PNG'
-           robber_position = Vector2()
-           robber_position.y = self.center_of_screen_y - 150
-           robber_position.x = self.center_of_screen_x + 260              
-           self.robber = SpriteNode(character_gender,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.135)                          
-        elif self.boy_button.frame.contains_point(touch.location) and not self.touched_once == True:           
-           character_gender = './assets/sprites/boy_thief.PNG' 
-           self.touched_once = True           
-           robber_position = Vector2()
-           robber_position.y = self.center_of_screen_y - 150
-           robber_position.x = self.center_of_screen_x + 260                
-           self.robber = SpriteNode(character_gender,
-                                 parent = self, 
-                                 position = robber_position,
-                                 scale = 0.135)  
+        if self.girl_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           self.girl_button_down = True
+           self.choose_character()	 
+        elif self.boy_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           self.girl_button_down = False
+           self.choose_character()                  
     
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
@@ -229,4 +286,4 @@ class SettingsScene(Scene):
     def resume(self):
         # this method is called, when user place app from background 
         # back into use. Reload anything you might need.
-        pass
+        pass            
