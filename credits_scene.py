@@ -4,7 +4,10 @@
 # This scene shows the main menu.
 
 from scene import *
+import sound
 import ui
+
+from settings_scene import *
 
 class CreditsScene(Scene):
     def setup(self):
@@ -16,6 +19,16 @@ class CreditsScene(Scene):
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.scale_size = 0.4
+        
+        if SettingsScene.SoundEffectsOn == True:
+           sound.set_volume(50)
+        elif SettingsScene.SoundEffectsOn == False:
+           sound.set_volume(0)
+        
+        if SettingsScene.MusicOn == True:
+           SettingsScene.MainMenuMusic.play()
+        elif SettingsScene.MusicOn == False:
+           SettingsScene.MainMenuMusic.pause()
         
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -72,6 +85,7 @@ class CreditsScene(Scene):
         pass
         
         if self.home_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
            self.dismiss_modal_scene()
         
     def did_change_size(self):

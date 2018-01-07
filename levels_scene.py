@@ -7,18 +7,31 @@ from scene import *
 import ui
 
 from main_game_scene import *
+from settings_scene import *
 
 class LevelsScene(Scene):
+    
+    LevelDifficulty = 0
+    
     def setup(self):
         # this method is called, when user moves to this scene
         
-        self.level_difficulty = 4
+        #self.level_difficulty = 0
         self.score_position = Vector2()
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
         # self.scale_size = 0.45
+        if SettingsScene.SoundEffectsOn == True:
+           sound.set_volume(50)
+        elif SettingsScene.SoundEffectsOn == False:
+           sound.set_volume(0)
+           
+        if SettingsScene.MusicOn == True:
+           SettingsScene.MainMenuMusic.play()
+        elif SettingsScene.MusicOn == False:
+           SettingsScene.MainMenuMusic.pause()
         
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -100,16 +113,24 @@ class LevelsScene(Scene):
         pass
         
         if self.home_button.frame.contains_point(touch.location):
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.stop()
            self.dismiss_modal_scene()
         
         if self.level_1.frame.contains_point(touch.location):
-           self.level_difficulty = 4
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.stop()
+           LevelsScene.LevelDifficulty = 3
            self.present_modal_scene(MainGameScene()) 
         elif self.level_2.frame.contains_point(touch.location): 
-           self.level_difficulty = 5
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.stop()
+           LevelsScene.LevelDifficulty = 4
            self.present_modal_scene(MainGameScene())
         elif self.level_3.frame.contains_point(touch.location):
-           self.level_difficulty = 7
+           sound.play_effect('8ve:8ve-tap-mellow')
+           SettingsScene.MainMenuMusic.stop()
+           LevelsScene.LevelDifficulty = 5
            self.present_modal_scene(MainGameScene())
     
     def did_change_size(self):
