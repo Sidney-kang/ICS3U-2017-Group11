@@ -1,5 +1,5 @@
 # Created by:Sidney Kang
-# Created on: Dec 2016
+# Created on: Jan 2018
 # Created for: ICS3U
 # This scene shows the losing scene.
 
@@ -8,8 +8,7 @@ import sound
 import ui
 
 from main_menu_scene import *
-
-#from settings_scene import character_gender
+from settings_scene import *
 
 class LoseScene(Scene):
     def setup(self):
@@ -26,17 +25,24 @@ class LoseScene(Scene):
         self.black = SpriteNode(position = self.size / 2, 
                                 color = ('black'), 
                                 parent = self, 
-                                size = self.size)
-                                      
-        # add lose scene background 
-     #  if character_gender == './assets/sprites/boy_thief.PNG':
+                                size = self.size)       
+                                                                   
+        # show lose scene background 
         background_position = Vector2()
         background_position.y = self.center_of_screen_y + 100
-        background_position.x = self.center_of_screen_x                         
-        self.background = SpriteNode('./assets/sprites/lose_scene_background.PNG',
-                                     parent = self, 
-                                     position = background_position,
-                                     size = self.size/1.2) 
+        background_position.x = self.center_of_screen_x  
+        # for boy robber
+        if SettingsScene.GenderType == './assets/sprites/boy_thief.PNG':                                   
+           self.background = SpriteNode('./assets/sprites/lose_scene_background.PNG',
+                                        parent = self, 
+                                        position = background_position,
+                                        size = self.size/1.2) 
+        # for girl robber                                
+        else:
+           self.background = SpriteNode('./assets/sprites/lose_scene_background_female.PNG',
+                                        parent = self, 
+                                        position = background_position,
+                                        size = self.size/1.2)                             
                                      
         home_button_position = Vector2()
         home_button_position.y = self.size_of_screen_y - 70
@@ -46,6 +52,7 @@ class LoseScene(Scene):
                                        position = home_button_position,
                                        scale = 0.25)        
                                        
+        # This shows 'YOU LOSE' label                             
         lose_label_position = Vector2()   
         lose_label_position.y = self.center_of_screen_y - 275
         lose_label_position.x = self.center_of_screen_x                                           
@@ -71,6 +78,7 @@ class LoseScene(Scene):
         # this method is called, when user releases a finger from the screen
         pass
         
+        # This transitions to main menu scene 
         if self.home_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(MainMenuScene())      
