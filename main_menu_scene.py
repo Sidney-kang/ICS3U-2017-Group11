@@ -14,21 +14,21 @@ from credits_scene import *
 class MainMenuScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
-        
+
         self.score_position = Vector2()
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.scale_size = 0.4
-        
+
         # This allows sound effects to play or to not play 
         # based on whether the play sound effects or no sound effects was pressed (in settings scene)               
         if SettingsScene.SoundEffectsOn == True:
            sound.set_volume(50)
         elif SettingsScene.SoundEffectsOn == False:
            sound.set_volume(0)
-       
+
         # This plays or does not play music 
         # based on whether the music or no music button was pressed (in settings scene)  
         if SettingsScene.MusicOn == True:
@@ -41,7 +41,7 @@ class MainMenuScene(Scene):
         	                           position = self.size / 2, 
                                      parent = self, 
                                      size = self.size)                                                                         
-         
+
         # add bush on right                                                         
         bush_position = Vector2()
         bush_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
@@ -50,7 +50,7 @@ class MainMenuScene(Scene):
                                parent = self, 
                                position = bush_position,
                                scale = 0.45)       
-        
+
         # add bush on left                                                              
         bush_2_position = Vector2()
         bush_2_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
@@ -59,7 +59,7 @@ class MainMenuScene(Scene):
                                  parent = self, 
                                  position = bush_2_position,
                                  scale = 0.45)                               
-        
+
         # This shows game logo                                                          
         game_logo_position = Vector2()
         game_logo_position.y = self.center_of_screen_y + 50
@@ -68,7 +68,7 @@ class MainMenuScene(Scene):
                                     parent = self, 
                                     position = game_logo_position,
                                     scale = 0.45)                                
-        
+
         # This shows start button                                                          
         start_button_position = Vector2()
         start_button_position.y = self.center_of_screen_y - 130
@@ -77,7 +77,7 @@ class MainMenuScene(Scene):
                                        parent = self,
                                        position = start_button_position,
                                        scale = 0.23)        
-        
+
         # This shows settings button                                                                
         settings_button_position = Vector2()
         settings_button_position.y = self.center_of_screen_y - 200
@@ -86,7 +86,7 @@ class MainMenuScene(Scene):
                                           parent = self,
                                           position = settings_button_position,
                                           scale = 0.23)      
-        
+
         # This shows credits button                                                                  
         credits_button_position = Vector2()
         credits_button_position.y = self.center_of_screen_y - 270
@@ -94,9 +94,8 @@ class MainMenuScene(Scene):
         self.credits_button = SpriteNode('./assets/sprites/credits_button.PNG',
                                          parent = self,
                                          position = credits_button_position,
-                                         scale = 0.23)                                                                                                                                         
-                                                                                                                                                                                                                                                                                                                                                            
-    
+                                         scale = 0.23)
+                                                                                                                                                                         
     def update(self):
         # this method is called, hopefully, 60 times a second
         pass
@@ -112,7 +111,7 @@ class MainMenuScene(Scene):
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
-        
+
         # This transitions to settings scene
         if self.settings_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
@@ -125,7 +124,7 @@ class MainMenuScene(Scene):
         if self.start_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            self.present_modal_scene(LevelsScene())
-    
+
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
         # thus changing the size of each dimension
