@@ -6,6 +6,7 @@
 from scene import *
 import sound
 import ui
+import config
 
 from levels_scene import *
 from settings_scene import *
@@ -24,17 +25,17 @@ class MainMenuScene(Scene):
 
         # This allows sound effects to play or to not play 
         # based on whether the play sound effects or no sound effects was pressed (in settings scene)               
-        if SettingsScene.SoundEffectsOn == True:
+        if config.sound_effects_on == True:
            sound.set_volume(50)
-        elif SettingsScene.SoundEffectsOn == False:
+        elif config.sound_effects_on == False:
            sound.set_volume(0)
 
         # This plays or does not play music 
         # based on whether the music or no music button was pressed (in settings scene)  
-        if SettingsScene.MusicOn == True:
-           SettingsScene.MainMenuMusic.play()
-        elif SettingsScene.MusicOn == False:
-           SettingsScene.MainMenuMusic.pause()
+        if config.music_on == True:
+           config.main_menu_music.play()
+        elif config.music_on == False:
+           config.main_menu_music.pause()
 
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
