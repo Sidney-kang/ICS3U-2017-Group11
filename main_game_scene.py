@@ -6,12 +6,11 @@
 from scene import *
 import sound
 import time
+import config
 import ui
 
 from settings_scene import *
-import config
 from main_menu_scene import *
-import config
 from lose_scene import *
 from win_scene import *
 from numpy import random
@@ -83,10 +82,22 @@ class MainGameScene(Scene):
             self.increment = self.increment + 60                     
         
         # This creates bush and coin sprites in which each bush and coin pair is spaced out proportionately                                                                    
-        for counter in range(0,config.level_difficulty):#LevelsScene.LevelDifficulty
+        for counter in range(0,config.level_difficulty):
             self.create_bush()  
-            self.create_coin()                        
-                                                                                                                
+            self.create_coin()  
+            
+            '''
+            for bush in self.bushes:
+                for coin in self.coins:
+                    while bush.frame.intersects(self.bush):
+                          bush.remove_from_parent()  
+                          self.bushes.remove(bush)
+                          coin.remove_from_parent()   
+                          self.coins.remove(coin)                  
+                          self.create_bush()  
+                          self.create_coin()   
+                          '''
+                                                                                                               
         # Creates robber sprite                                                           
         self.robber_position = Vector2()
         self.robber_position.y = self.center_of_screen_y - 250
@@ -464,3 +475,21 @@ class MainGameScene(Scene):
                                         parent = self, 
                                         position = levels_button_position,
                                         scale = 0.35)        
+                                        
+def character_turned_left(self):
+	
+    self.robber.removed_from_parent()       
+    
+    self.robber = SpriteNode('./assets/sprites/boy_thief_right.PNG',
+                                 parent = self, 
+                                 position = self.robber_position,
+                                 scale = 0.11)        
+                                 
+def character_turned_right(self):
+	
+    self.robber.removed_from_parent()       
+    
+    self.robber = SpriteNode(self.character_gender,
+                                 parent = self, 
+                                 position = self.robber_position,
+                                 scale = 0.11)                                                                                                                                 
