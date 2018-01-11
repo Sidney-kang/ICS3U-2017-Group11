@@ -1,4 +1,4 @@
-# Created by: Shuvaethy Neill
+# Created by: Sidney Kang
 # Created on: Jan 2018
 # Created for: ICS3U
 # This scene shows the main menu.
@@ -6,6 +6,7 @@
 from scene import *
 import sound
 import ui
+import config
 
 from levels_scene import *
 from settings_scene import *
@@ -24,17 +25,17 @@ class MainMenuScene(Scene):
 
         # This allows sound effects to play or to not play 
         # based on whether the play sound effects or no sound effects was pressed (in settings scene)               
-        if SettingsScene.SoundEffectsOn == True:
+        if config.sound_effects_on == True:
            sound.set_volume(50)
-        elif SettingsScene.SoundEffectsOn == False:
+        elif config.sound_effects_on == False:
            sound.set_volume(0)
 
         # This plays or does not play music 
         # based on whether the music or no music button was pressed (in settings scene)  
-        if SettingsScene.MusicOn == True:
-           SettingsScene.MainMenuMusic.play()
-        elif SettingsScene.MusicOn == False:
-           SettingsScene.MainMenuMusic.pause()
+        if config.music_on == True:
+           config.main_menu_music.play()
+        elif config.music_on == False:
+           config.main_menu_music.pause()
 
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -95,19 +96,19 @@ class MainMenuScene(Scene):
                                          parent = self,
                                          position = credits_button_position,
                                          scale = 0.23)
-                                                                                                                                                                         
+                                                                                                                                                                   
     def update(self):
         # this method is called, hopefully, 60 times a second
         pass
-    
+
     def touch_began(self, touch):
         # this method is called, when user touches the screen
         pass
-    
+
     def touch_moved(self, touch):
         # this method is called, when user moves a finger around on the screen
         pass
-    
+
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
@@ -129,12 +130,12 @@ class MainMenuScene(Scene):
         # this method is called, when user changes the orientation of the screen
         # thus changing the size of each dimension
         pass
-    
+
     def pause(self):
         # this method is called, when user touches the home button
         # save anything before app is put to background
         pass
-    
+
     def resume(self):
         # this method is called, when user place app from background 
         # back into use. Reload anything you might need.
