@@ -1,5 +1,5 @@
 # Created by: Sidney Kang
-# Created on: Sep 2016
+# Created on: Jan 2018
 # Created for: ICS3U
 # This scene shows the levels scene.
 
@@ -7,11 +7,9 @@ from scene import *
 import ui
 
 from main_game_scene import *
-from settings_scene import *
+import config
 
 class LevelsScene(Scene):
-    
-    LevelDifficulty = 0
     
     def setup(self):
         # this method is called, when user moves to this scene
@@ -22,15 +20,19 @@ class LevelsScene(Scene):
         self.center_of_screen_x = self.size_of_screen_x/2
         self.center_of_screen_y = self.size_of_screen_y/2 
 
-        if SettingsScene.SoundEffectsOn == True:
+        # This allows sound effects to play or to not play 
+        # based on whether the play sound effects or no sound effects was pressed (in settings scene)  
+        if config.sound_effects_on == True:
            sound.set_volume(50)
-        elif SettingsScene.SoundEffectsOn == False:
+        elif config.sound_effects_on == False:
            sound.set_volume(0)
 
-        if SettingsScene.MusicOn == True:
-           SettingsScene.MainMenuMusic.play()
-        elif SettingsScene.MusicOn == False:
-           SettingsScene.MainMenuMusic.pause()
+        # This plays or does not play music 
+        # based on whether the music or no music button was pressed (in settings scene)  
+        if config.music_on == True:
+           config.main_menu_music.play()
+        elif config.music_on == False:
+           config.main_menu_music.pause()
         
         # add blue sky background 
         self.background = SpriteNode('./assets/sprites/main_menu_background.PNG',
@@ -56,6 +58,7 @@ class LevelsScene(Scene):
                                  position = bush_2_position,
                                  scale = 0.45)     
 
+        # This shows home button
         home_button_position = Vector2()
         home_button_position.y = self.size_of_screen_y - 70
         home_button_position.x = (self.size_of_screen_x - (2 * (self.center_of_screen_x))) + 100                   
@@ -71,29 +74,32 @@ class LevelsScene(Scene):
                                        parent = self, 
                                        position = levels_title_position,
                                        scale = 0.45)                              
- 
-        level_1_position = Vector2()
-        level_1_position.y = self.center_of_screen_y 
-        level_1_position.x = self.center_of_screen_x - 350                            
-        self.level_1 = SpriteNode('./assets/sprites/level_1_button.PNG',
+
+        # This shows level 1 button 
+        level_1_button_position = Vector2()
+        level_1_button_position.y = self.center_of_screen_y 
+        level_1_button_position.x = self.center_of_screen_x - 350                            
+        self.level_1_button = SpriteNode('./assets/sprites/level_1_button.PNG',
                                   parent = self, 
-                                  position = level_1_position,
+                                  position = level_1_button_position,
                                   scale = 0.4)
 
-        level_2_position = Vector2()
-        level_2_position.y = self.center_of_screen_y 
-        level_2_position.x = self.center_of_screen_x                             
-        self.level_2 = SpriteNode('./assets/sprites/level_2_button.PNG',
+        # This shows level 2 button 
+        level_2_button_position = Vector2()
+        level_2_button_position.y = self.center_of_screen_y 
+        level_2_button_position.x = self.center_of_screen_x                             
+        self.level_2_button = SpriteNode('./assets/sprites/level_2_button.PNG',
                                   parent = self, 
-                                  position = level_2_position,
+                                  position = level_2_button_position,
                                   scale = 0.4) 
 
-        level_3_position = Vector2()
-        level_3_position.y = self.center_of_screen_y 
-        level_3_position.x = self.center_of_screen_x + 350                            
-        self.level_3 = SpriteNode('./assets/sprites/level_3_button.PNG',
+        # This shows level 3 button 
+        level_3_button_position = Vector2()
+        level_3_button_position.y = self.center_of_screen_y 
+        level_3_button_position.x = self.center_of_screen_x + 350                            
+        self.level_3_button = SpriteNode('./assets/sprites/level_3_button.PNG',
                                   parent = self, 
-                                  position = level_3_position,
+                                  position = level_3_button_position,
                                   scale = 0.4)                               
 
     def update(self):
@@ -114,23 +120,22 @@ class LevelsScene(Scene):
         
         if self.home_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           SettingsScene.MainMenuMusic.stop()
            self.dismiss_modal_scene()
         
-        if self.level_1.frame.contains_point(touch.location):
+        if self.level_1_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           SettingsScene.MainMenuMusic.stop()
-           LevelsScene.LevelDifficulty = 3
+           config.main_menu_music.stop()
+           config.level_difficulty = 3
            self.present_modal_scene(MainGameScene()) 
-        elif self.level_2.frame.contains_point(touch.location): 
+        elif self.level_2_button.frame.contains_point(touch.location): 
            sound.play_effect('8ve:8ve-tap-mellow')
-           SettingsScene.MainMenuMusic.stop()
-           LevelsScene.LevelDifficulty = 4
+           config.main_menu_music.stop()
+           config.level_difficulty = 4
            self.present_modal_scene(MainGameScene())
-        elif self.level_3.frame.contains_point(touch.location):
+        elif self.level_3_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           SettingsScene.MainMenuMusic.stop()
-           LevelsScene.LevelDifficulty = 5
+           config.main_menu_music.stop()
+           config.level_difficulty = 5
            self.present_modal_scene(MainGameScene())
     
     def did_change_size(self):
