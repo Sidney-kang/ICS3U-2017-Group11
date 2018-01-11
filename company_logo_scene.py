@@ -1,4 +1,4 @@
-# Created by: Sidney Kang
+# Created by: Shuvaethy Neill
 # Created on: Dec 2017
 # Created for: ICS3U
 # This scene shows a company logo screen for 2 seconds,
