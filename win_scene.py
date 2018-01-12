@@ -8,7 +8,6 @@ import time
 import ui
 
 from main_game_scene import *
-from main_menu_scene import *
 
 class WinScene(Scene):
     def setup(self):
@@ -32,9 +31,9 @@ class WinScene(Scene):
         background_position.y = self.center_of_screen_y + 100
         background_position.x = self.center_of_screen_x                         
         self.background = SpriteNode('./assets/sprites/win_scene_background.PNG',
-                                     parent = self, 
-                                     position = background_position,
-                                     size = self.size/1.2)  
+                                       parent = self, 
+                                       position = background_position,
+                                       size = self.size/1.2)  
 
         win_label_position = Vector2()   
         win_label_position.y = self.center_of_screen_y - 275
@@ -57,15 +56,15 @@ class WinScene(Scene):
     def update(self):
         # this method is called, hopefully, 60 times a second
         pass
-
+    
     def touch_began(self, touch):
         # this method is called, when user touches the screen
         pass
-
+    
     def touch_moved(self, touch):
         # this method is called, when user moves a finger around on the screen
         pass
-
+    
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
@@ -74,9 +73,10 @@ class WinScene(Scene):
         if self.next_arrow_button.frame.contains_point(touch.location):
            if config.level_difficulty < 6:
               config.level_difficulty = config.level_difficulty + 1
-              self.present_modal_scene(MainGameScene())
+              config.game_won = True
+              self.dismiss_modal_scene()
            else:
-              self.present_modal_scene(MainMenuScene())
+              config.game_over = True
 
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
@@ -87,8 +87,8 @@ class WinScene(Scene):
         # this method is called, when user touches the home button
         # save anything before app is put to background
         pass
-
+    
     def resume(self):
         # this method is called, when user place app from background 
         # back into use. Reload anything you might need.
-        pass
+        pass    
