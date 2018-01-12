@@ -1,7 +1,7 @@
-# Created by: Mr. Coxall
-# Created on: Sep 2016
+# Created by: Shuvaethy Neill
+# Created on: Dec 2017
 # Created for: ICS3U
-# This scene shows the main menu.
+# This scene shows the credits scene
 
 from scene import *
 import sound
@@ -66,7 +66,25 @@ class CreditsScene(Scene):
         self.home_button = SpriteNode('./assets/sprites/home_button.PNG',
                                       parent = self, 
                                       position = home_button_position,
-                                      scale = 0.25)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                      scale = 0.25)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+    
+        made_by_label_position = Vector2()   
+        made_by_label_position.y = self.center_of_screen_y - -120
+        made_by_label_position.x = self.center_of_screen_x - 0                                            
+        self.made_by_label = LabelNode(text = 'Made by:',
+                                       font = ('Avenir Next Condensed', 45),
+                                       color = 'black',
+                                       parent = self,
+                                       position = made_by_label_position)     
+    
+        names_label_position = Vector2()   
+        names_label_position.y = self.center_of_screen_y - -60
+        names_label_position.x = self.center_of_screen_x - 0                                           
+        self.names_label = LabelNode(text = 'Sidney and Shuvaethy',
+                                       font = ('Avenir Next Condensed', 45),
+                                       color = 'black',
+                                       parent = self,
+                                       position = names_label_position)     
     
     def update(self):
         # this method is called, hopefully, 60 times a second
