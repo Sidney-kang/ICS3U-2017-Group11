@@ -104,7 +104,12 @@ class LevelsScene(Scene):
 
     def update(self):
         # this method is called, hopefully, 60 times a second
-        pass
+        
+        if config.game_over == True:
+           self.dismiss_modal_scene()           
+        if config.home_menu_pressed == True:
+           config.home_menu_pressed = False
+           self.dismiss_modal_scene()
     
     def touch_began(self, touch):
         # this method is called, when user touches the screen
