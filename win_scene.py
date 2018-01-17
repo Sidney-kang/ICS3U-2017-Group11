@@ -4,10 +4,12 @@
 # This scene shows the winning scene.
 
 from scene import *
+import config
+import sound
 import time
 import ui
 
-from main_game_scene import *
+#from levels_scene import *
 
 class WinScene(Scene):
     def setup(self):
@@ -24,16 +26,24 @@ class WinScene(Scene):
                                 color = ('black'), 
                                 parent = self, 
                                 size = self.size)
-
-        # add lose scene background 
-        #if character_gender == './assets/sprites/boy_thief.PNG':
+                                
         background_position = Vector2()
         background_position.y = self.center_of_screen_y + 100
-        background_position.x = self.center_of_screen_x                         
-        self.background = SpriteNode('./assets/sprites/win_scene_background.PNG',
-                                       parent = self, 
-                                       position = background_position,
-                                       size = self.size/1.2)  
+        background_position.x = self.center_of_screen_x                              
+    
+        # add lose scene background 
+        if config.gender_type == './assets/sprites/boy_thief.PNG':                                                                 
+           self.background = SpriteNode('./assets/sprites/win_scene_background.PNG',
+                                        parent = self, 
+                                        position = background_position,
+                                        size = self.size/1.1)  
+        # for girl robber                                
+        else:
+           self.background = SpriteNode('./assets/sprites/win_scene_background_female.PNG',
+                                        parent = self, 
+                                        position = background_position,
+                                        size = self.size/1.1)
+        
 
         win_label_position = Vector2()   
         win_label_position.y = self.center_of_screen_y - 275
@@ -48,7 +58,7 @@ class WinScene(Scene):
         next_arrow_button_position = Vector2()
         next_arrow_button_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         next_arrow_button_position.x = self.size_of_screen_x - 80                    
-        self.next_arrow_button = SpriteNode('./assets/sprites/back_arrow_button.PNG',
+        self.next_arrow_button = SpriteNode('./assets/sprites/next_arrow_button.PNG',
                                             parent = self, 
                                             position = next_arrow_button_position,
                                             scale = 0.25)                                                                                                                    
@@ -71,12 +81,15 @@ class WinScene(Scene):
         
         # This transitions to level scene
         if self.next_arrow_button.frame.contains_point(touch.location):
-           if config.level_difficulty < 6:
-              config.level_difficulty = config.level_difficulty + 1
+           sound.play_effect('8ve:8ve-tap-mellow')           
+           if config.level_difficulty != 5:
+              #config.level_difficulty = config.level_difficulty + 1
               config.game_won = True
+              #self.present_modal_scene(LevelsScene())
               self.dismiss_modal_scene()
            else:
               config.game_over = True
+              self.dismiss_modal_scene()
 
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
