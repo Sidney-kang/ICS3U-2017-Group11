@@ -55,7 +55,7 @@ class LoseScene(Scene):
         next_arrow_button_position = Vector2()
         next_arrow_button_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         next_arrow_button_position.x = self.size_of_screen_x - 80                    
-        self.next_arrow_button = SpriteNode('./assets/sprites/back_arrow_button.PNG',
+        self.next_arrow_button = SpriteNode('./assets/sprites/next_arrow_button.PNG',
                                             parent = self, 
                                             position = next_arrow_button_position,
                                             scale = 0.25)                                        
@@ -89,6 +89,7 @@ class LoseScene(Scene):
         # This transitions back to game 
         if self.next_arrow_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
+           config.game_won = True
            self.dismiss_modal_scene()
            
         # This transitions to main menu scene 
