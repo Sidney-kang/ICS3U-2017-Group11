@@ -1,15 +1,13 @@
 # Created by: Shuvaethy Neill
 # Created on: Dec 2017
 # Created for: ICS3U
-# This scene shows a company logo screen for 2 seconds,
-#   then transitions to the main menu.
+# This scene shows a company logo screen for 2 seconds, then transitions to the main menu
 
 from scene import *
 import ui
 import time
 
 from main_menu_scene import *
-
 
 class CompanyLogoScene(Scene):
     def setup(self):
@@ -21,7 +19,7 @@ class CompanyLogoScene(Scene):
         # add background color
         self.company_logo = SpriteNode('./assets/sprites/company_logo.PNG',
         	                           position = self.size / 2, 
-                                     parent = self, 
+                                     parent = self,
                                      size = self.size/1.1)
                                      
         # create timer, so that after 2 seconds move to next scene
