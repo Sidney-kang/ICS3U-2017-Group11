@@ -27,6 +27,7 @@ class MainGameScene(Scene):
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.sprite_direction_switched_right = False
         self.heart_removed = False
+        self.counter = 0
         # self.scale_size = 0.45
         
         self.down_button_down = False
@@ -98,9 +99,7 @@ class MainGameScene(Scene):
                           self.create_coin()                         
                      inner_loop_counter += 1
               outer_loop_counter += 1
-        print('done once')
-        print('')
-                                                                                                                        
+                                                                                                                   
         # Creates robber sprite                                                           
         self.robber_position = Vector2()
         self.robber_position.y = self.center_of_screen_y - 250
@@ -156,7 +155,7 @@ class MainGameScene(Scene):
                                     parent = self,
                                     position = coin_count_position)     
                                     
-                
+               
         coin_count_sprite_position = Vector2()
         coin_count_sprite_position.y = self.size_of_screen_y - 55
         coin_count_sprite_position.x = self.center_of_screen_x + 370                                                             
@@ -176,7 +175,7 @@ class MainGameScene(Scene):
                                        
     def update(self):
         # this method is called, hopefully, 60 times a second
-           
+        
         if config.game_over == True or config.game_won == True:
            self.dismiss_modal_scene()   
             
@@ -260,7 +259,6 @@ class MainGameScene(Scene):
                   self.number_coins_collected = self.number_coins_collected + 1
                   self.coin_count.text = 'Coins:' + '      ' + str(self.number_coins_collected) + '/' + str(config.level_difficulty)
                   config.main_game_music.stop() 
-                  #config.game_won = True
                   self.present_modal_scene(WinScene())   
         else:
            pass                    
