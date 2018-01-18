@@ -1,7 +1,7 @@
 # Created by: Sidney Kang
 # Created on: Jan 2018
 # Created for: ICS3U
-# This holds all true global variables.
+# This holds all global variables.
 
 import sound
 
