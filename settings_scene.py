@@ -8,8 +8,6 @@ import sound
 import ui
 
 import config
-#global character_gender
-#character_gender = './assets/sprites/boy_thief.PNG'
 
 class SettingsScene(Scene):	    
        
@@ -73,7 +71,7 @@ class SettingsScene(Scene):
         self.back_arrow_button = SpriteNode('./assets/sprites/back_arrow_button.PNG',
                                             parent = self, 
                                             position = back_arrow_button_position,
-                                            scale = 0.25)            
+                                            scale = 0.6)            
         
         # This shows music button                                                                  
         music_button_position = Vector2()
@@ -254,11 +252,9 @@ class SettingsScene(Scene):
         if self.music_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            config.main_menu_music.play()
-           #config.main_game_music.play() 
            config.music_on = True
         if self.no_music_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           #config.main_game_music.pause() 
            config.main_menu_music.pause()
            config.music_on = False
         if self.sound_effects_button.frame.contains_point(touch.location):     

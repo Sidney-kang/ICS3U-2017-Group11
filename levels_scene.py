@@ -105,11 +105,15 @@ class LevelsScene(Scene):
     def update(self):
         # this method is called, hopefully, 60 times a second
         
-        if config.game_over == True:
-           self.dismiss_modal_scene()           
-        if config.home_menu_pressed == True:
-           config.home_menu_pressed = False
-           self.dismiss_modal_scene()
+         #if config.game_won == True:
+            #config.game_won = False
+           
+         if config.game_over == True:
+            self.dismiss_modal_scene()  
+                    
+         if config.home_menu_pressed == True:
+            config.home_menu_pressed = False
+            self.dismiss_modal_scene()
     
     def touch_began(self, touch):
         # this method is called, when user touches the screen
@@ -130,16 +134,19 @@ class LevelsScene(Scene):
         if self.level_1_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            config.main_menu_music.stop()
+           config.game_won = False
            config.level_difficulty = 3
            self.present_modal_scene(MainGameScene()) 
         elif self.level_2_button.frame.contains_point(touch.location): 
            sound.play_effect('8ve:8ve-tap-mellow')
            config.main_menu_music.stop()
+           config.game_won = False
            config.level_difficulty = 4
            self.present_modal_scene(MainGameScene())
         elif self.level_3_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
            config.main_menu_music.stop()
+           config.game_won = False
            config.level_difficulty = 5
            self.present_modal_scene(MainGameScene())
     
