@@ -124,7 +124,6 @@ class MainMenuScene(Scene):
         # This transitions to levels scene  
         if self.start_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           config.game_over = False
            self.present_modal_scene(LevelsScene())
 
     def did_change_size(self):
