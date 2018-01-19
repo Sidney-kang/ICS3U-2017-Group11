@@ -93,7 +93,7 @@ class SettingsScene(Scene):
         
         # This shows sound effects button                                                                
         sound_effects_button_position = Vector2()
-        sound_effects_button_position.y = self.center_of_screen_y - 150
+        sound_effects_button_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         sound_effects_button_position.x = self.center_of_screen_x - 360                  
         self.sound_effects_button = SpriteNode('./assets/sprites/volume_button.PNG',
                                                parent = self, 
@@ -102,7 +102,7 @@ class SettingsScene(Scene):
         
         # This shows no sound effects button                                                                  
         no_sound_effects_button_position = Vector2()
-        no_sound_effects_button_position.y = self.center_of_screen_y - 150
+        no_sound_effects_button_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 100
         no_sound_effects_button_position.x = self.center_of_screen_x - 150                  
         self.no_sound_effects_button = SpriteNode('./assets/sprites/no_volume_button.PNG',
                                                   parent = self, 
@@ -129,7 +129,7 @@ class SettingsScene(Scene):
         
         # This shows settings title label                                                                                                                                   
         settings_title_position = Vector2()
-        settings_title_position.y = self.center_of_screen_y + 270
+        settings_title_position.y = self.size_of_screen_y - 100
         settings_title_position.x = self.center_of_screen_x                      
         self.settings_title = SpriteNode('./assets/sprites/settings_title.PNG',
                                          parent = self, 
@@ -148,7 +148,7 @@ class SettingsScene(Scene):
         
         # This shows sound effects label                                                                                                                
         sound_effects_label_position = Vector2()   
-        sound_effects_label_position.y = self.center_of_screen_y - 50
+        sound_effects_label_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 200
         sound_effects_label_position.x = self.center_of_screen_x - 285                                              
         self.sound_effects = LabelNode(text = 'Sound Effects',
                                        font = ('Marker Felt', 45),
@@ -183,7 +183,15 @@ class SettingsScene(Scene):
                               font = ('Marker Felt', 35),
                               parent = self,
                               color = 'black',
-                              position = girl_label_position)                                  
+                              position = girl_label_position)   
+                              
+        robber_position = Vector2()
+        robber_position.y = self.center_of_screen_y - 150
+        robber_position.x = self.center_of_screen_x + 260                
+        self.robber = SpriteNode(config.gender_type,
+                                 parent = self, 
+                                 position = robber_position,
+                                 scale = 0.135)                                                      
                                                                                       
     def update(self):
         # this method is called, hopefully, 60 times a second

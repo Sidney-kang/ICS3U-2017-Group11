@@ -183,7 +183,6 @@ class MainGameScene(Scene):
         missile_create_chance = random.randint(1,30)
         if missile_create_chance <= self.police_attack_rate and config.game_over == False or missile_create_chance <= self.police_attack_rate and config.game_won == False:
            self.create_new_missile() 
-           time.sleep(0.80)
            sound.play_effect('arcade:Explosion_7')                  
            
         for missile in self.missiles:
