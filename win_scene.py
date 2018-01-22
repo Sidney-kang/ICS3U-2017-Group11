@@ -1,4 +1,4 @@
-# Created by:Sidney Kang
+# Created by:Shuvaethy Neill
 # Created on: Jan 2018
 # Created for: ICS3U
 # This scene shows the winning scene.
@@ -81,12 +81,13 @@ class WinScene(Scene):
         
         # This transitions to level scene
         if self.next_arrow_button.frame.contains_point(touch.location):
-           sound.play_effect('8ve:8ve-tap-mellow')           
-           if config.level_difficulty != 5:
-              #config.level_difficulty = config.level_difficulty + 1
-              config.game_won = True
-              #self.present_modal_scene(LevelsScene())
+           sound.play_effect('8ve:8ve-tap-mellow')    
+           config.level_difficulty = config.level_difficulty + 1       
+           if config.level_difficulty <= 5:              
+              config.restart_game = True
               self.dismiss_modal_scene()
+              if config.ran_once == True:
+                 config.ran_once = False
            else:
               config.game_over = True
               self.dismiss_modal_scene()
