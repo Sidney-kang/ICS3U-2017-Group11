@@ -85,17 +85,11 @@ class LoseScene(Scene):
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         pass
-        
-        # This transitions back to game 
+               
         if self.next_arrow_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
-           config.game_won = True
-           self.dismiss_modal_scene()
-           
-        # This transitions to main menu scene 
-        if self.home_button.frame.contains_point(touch.location):
-           sound.play_effect('8ve:8ve-tap-mellow')
            config.game_over = True    
+           self.dismiss_modal_scene()                  
     
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
