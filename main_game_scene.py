@@ -42,9 +42,10 @@ class MainGameScene(Scene):
         self.coins = []
         self.hearts = []
         self.police_attack_speed = 15.0
-        self.police_attack_rate = 1
+        self.police_attack_rate = 5
         self.number_coins_collected = 0
         self.character_gender = config.gender_type       
+        self.stop_missiles = False
         
         # This allows sound effects to play or to not play 
         # based on whether the play sound effects or no sound effects was pressed (in settings scene)  
@@ -153,18 +154,21 @@ class MainGameScene(Scene):
     def update(self):
         # this method is called, hopefully, 60 times a second
         
-        if config.ran_once == False: 
-           if config.restart_game == True:
-              self.setup()
-              config.ran_once = True
-        
-        if config.game_over == True or config.game_won == True:
+        if config.ran_once == True: 
+           if config.restart_game == True and config.game_won == True:
+              self.setup()             
+              config.ran_once = False
+              #self.stop_missiles = False
+                     
+        if config.game_over == True or config.game_won == True and config.level_difficulty > 5 or config.game_won == True and config.no_button_pressed == True:
            self.dismiss_modal_scene()   
             
         # Every update it randomly check if new missiles should be created
         missile_create_chance = random.randint(1,30)
-        if missile_create_chance <= self.police_attack_rate and config.game_over == False or missile_create_chance <= self.police_attack_rate and config.game_won == False:
+        
+        if missile_create_chance <= self.police_attack_rate and self.stop_missiles == False:
            self.create_new_missile() 
+           self.heart_removed = False
            sound.play_effect('arcade:Explosion_7')                  
            
         for missile in self.missiles:
@@ -194,10 +198,10 @@ class MainGameScene(Scene):
                       missile.remove_from_parent()
                       self.missiles.remove(missile)
                       self.heart_removed = True 
-        elif len(self.missiles) > 0 and len(self.hearts) == 1 and self.heart_removed == False:  
+        elif len(self.missiles) > 0 and len(self.hearts) == 1:  
              for missile in self.missiles:
                  for heart in self.hearts:
-                     if missile.frame.intersects(self.robber.frame):  
+                     if missile.frame.intersects(self.robber.frame) and self.heart_removed == False:  
                         sound.play_effect('arcade:Hit_2')
                         heart.remove_from_parent()
                         self.hearts.remove(heart)  
@@ -205,10 +209,10 @@ class MainGameScene(Scene):
                         self.missiles.remove(missile) 
                         self.robber.remove_from_parent()      
                         config.main_game_music.stop()  
-                        #config.game_over = True
+                        self.stop_missiles = True
                         self.present_modal_scene(LoseScene())     
         else:
-           self.heart_removed = False
+           
            pass         	            
         
         # This checks if missile hit a bush, if so it removes missile from screen    
@@ -240,6 +244,8 @@ class MainGameScene(Scene):
                   self.number_coins_collected = self.number_coins_collected + 1
                   self.coin_count.text = 'Coins:' + '      ' + str(self.number_coins_collected) + '/' + str(config.level_difficulty)
                   config.main_game_music.stop() 
+                  config.game_won = False
+                  self.stop_missiles = True
                   self.present_modal_scene(WinScene())   
         else:
            pass                    
@@ -282,7 +288,8 @@ class MainGameScene(Scene):
         # game is paused in background
         if self.table_view_button.frame.contains_point(touch.location) and self.table_view_button_down == True:
            sound.play_effect('8ve:8ve-tap-mellow')                                  
-           self.multi_menu_scene()            
+           self.multi_menu_scene()  
+           self.stop_missiles = True          
            self.table_view_button_down = False
         
         # This gets rid of blurry background and all buttons so user can return to game         
@@ -294,6 +301,7 @@ class MainGameScene(Scene):
               self.settings_button.remove_from_parent()
               self.home_button_game_scene.remove_from_parent()
               self.levels_button.remove_from_parent() 
+              self.stop_missiles = False
               self.table_view_button_down = True
            # This transitions to seetings_scene                                 
            elif self.settings_button.frame.contains_point(touch.location): 
@@ -442,10 +450,9 @@ class MainGameScene(Scene):
                                         scale = 0.35)        
                                         
     def character_turned_left(self):	
-    # This shows the character facing left
-    
+        # This shows the character facing left
         self.robber.remove_from_parent()    
-    
+
         new_robber_position = self.robber.position        
         self.robber = SpriteNode(self.character_gender,
                                  parent = self, 
@@ -453,7 +460,7 @@ class MainGameScene(Scene):
                                  scale = 0.11)        
                                  
     def character_turned_right(self):
-    # This shows the character facing right
+        # This shows the character facing right
     
         self.robber.remove_from_parent()       
     
