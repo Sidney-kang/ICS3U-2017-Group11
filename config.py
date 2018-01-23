@@ -12,5 +12,7 @@ sound_effects_on = True
 game_over = False
 game_won = False
 home_menu_pressed = False
+restart_game = False
+ran_once = False
 main_menu_music = sound.Player('assets/sounds/main_menu_music.mp3')
 main_game_music = sound.Player('assets/sounds/main_game_music.mp3')
