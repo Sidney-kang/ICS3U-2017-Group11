@@ -10,7 +10,6 @@ import config
 import ui
 
 from settings_scene import *
-from main_menu_scene import *
 from lose_scene import *
 from win_scene import *
 from numpy import random
@@ -28,7 +27,9 @@ class MainGameScene(Scene):
         self.center_of_screen_y = self.size_of_screen_y/2 
         self.sprite_direction_switched_right = False
         self.heart_removed = False
-        # self.scale_size = 0.45
+        self.counter = 0
+        self.pause_game = False
+       
         
         self.down_button_down = False
         self.left_button_down = False
@@ -43,7 +44,6 @@ class MainGameScene(Scene):
         self.police_attack_speed = 15.0
         self.police_attack_rate = 1
         self.number_coins_collected = 0
-        self.game_over = False
         self.character_gender = config.gender_type       
         
         # This allows sound effects to play or to not play 
@@ -75,29 +75,8 @@ class MainGameScene(Scene):
                                             parent = self, 
                                             position = table_view_button_position,
                                             scale = 0.25)                                                                                                     
-       
-        # This creates hearts sprite in which each heart is evenly spaced out
-        for counter in range(0,3):
-            self.create_heart() 
-            self.increment = self.increment + 60                     
-        
-        # This creates bush and coin sprites in which each bush and coin pair is spaced out proportionately                                                                    
-        for counter in range(0,config.level_difficulty):
-            self.create_bush()  
-            self.create_coin()  
-            
-            '''
-            for bush in self.bushes:
-                for coin in self.coins:
-                    while bush.frame.intersects(self.bush):
-                          bush.remove_from_parent()  
-                          self.bushes.remove(bush)
-                          coin.remove_from_parent()   
-                          self.coins.remove(coin)                  
-                          self.create_bush()  
-                          self.create_coin()   
-                          '''
-                                                                                                               
+        self.create_bush_and_coins()                
+                                                                                                                   
         # Creates robber sprite                                                           
         self.robber_position = Vector2()
         self.robber_position.y = self.center_of_screen_y - 250
@@ -105,8 +84,8 @@ class MainGameScene(Scene):
         self.robber = SpriteNode(self.character_gender,
                                  parent = self, 
                                  position = self.robber_position,
-                                 scale = 0.11)  
-        
+                                 scale = 0.11)                                
+               
         # Creates down button                                                   
         down_button_position = Vector2()
         down_button_position.y = (self.size_of_screen_y - (2 * (self.center_of_screen_y))) + 65
@@ -114,7 +93,7 @@ class MainGameScene(Scene):
         self.down_button = SpriteNode('./assets/sprites/down_button.PNG',
                                       parent = self, 
                                       position = down_button_position,
-                                      alpha = 0.8,
+                                      alpha = 0.7,
                                       scale = 0.15)         
         # Creates left button                                  
         left_button_position = Vector2()
@@ -123,7 +102,7 @@ class MainGameScene(Scene):
         self.left_button = SpriteNode('./assets/sprites/left_button.PNG',
                                       parent = self, 
                                       position = left_button_position,
-                                      alpha = 0.8,
+                                      alpha = 0.7,
                                       scale = 0.15)         
         # Creates up button                                    
         up_button_position = Vector2()
@@ -132,7 +111,7 @@ class MainGameScene(Scene):
         self.up_button = SpriteNode('./assets/sprites/up_button.PNG',
                                     parent = self, 
                                     position = up_button_position,
-                                    alpha = 0.8,
+                                    alpha = 0.7,
                                     scale = 0.15) 
         # Creates right button                                  
         right_button_position = Vector2()
@@ -141,8 +120,8 @@ class MainGameScene(Scene):
         self.right_button = SpriteNode('./assets/sprites/right_button.PNG',
                                        parent = self, 
                                        position = right_button_position,
-                                       alpha = 0.8,
-                                       scale = 0.15)    
+                                       alpha = 0.7,
+                                       scale = 0.15)                                                                                          
         
         coin_count_position = Vector2()   
         coin_count_position.y = self.size_of_screen_y - 55
@@ -153,7 +132,7 @@ class MainGameScene(Scene):
                                     parent = self,
                                     position = coin_count_position)     
                                     
-                
+               
         coin_count_sprite_position = Vector2()
         coin_count_sprite_position.y = self.size_of_screen_y - 55
         coin_count_sprite_position.x = self.center_of_screen_x + 370                                                             
@@ -174,11 +153,19 @@ class MainGameScene(Scene):
     def update(self):
         # this method is called, hopefully, 60 times a second
         
+        if config.ran_once == False: 
+           if config.restart_game == True:
+              self.setup()
+              config.ran_once = True
+        
+        if config.game_over == True or config.game_won == True:
+           self.dismiss_modal_scene()   
+            
         # Every update it randomly check if new missiles should be created
         missile_create_chance = random.randint(1,30)
-        if missile_create_chance <= self.police_attack_rate and self.game_over == False:
+        if missile_create_chance <= self.police_attack_rate and config.game_over == False or missile_create_chance <= self.police_attack_rate and config.game_won == False:
            self.create_new_missile() 
-           sound.play_effect('arcade:Explosion_7')
+           sound.play_effect('arcade:Explosion_7')                  
            
         for missile in self.missiles:
             if missile.position.y < self.size_of_screen_y - (2 * (self.center_of_screen_y)) + 40:
@@ -216,9 +203,9 @@ class MainGameScene(Scene):
                         self.hearts.remove(heart)  
                         missile.remove_from_parent()
                         self.missiles.remove(missile) 
-                        self.game_over = True
                         self.robber.remove_from_parent()      
                         config.main_game_music.stop()  
+                        #config.game_over = True
                         self.present_modal_scene(LoseScene())     
         else:
            self.heart_removed = False
@@ -252,46 +239,24 @@ class MainGameScene(Scene):
                   self.coins.remove(collected_coin)
                   self.number_coins_collected = self.number_coins_collected + 1
                   self.coin_count.text = 'Coins:' + '      ' + str(self.number_coins_collected) + '/' + str(config.level_difficulty)
-                  self.game_over = True
                   config.main_game_music.stop() 
                   self.present_modal_scene(WinScene())   
         else:
-           pass 
+           pass                    
     
     def touch_began(self, touch):
         # this method is called, when user touches the screen
         
         # Checks if up, down, left, or right button was pressed
         if self.left_button.frame.contains_point(touch.location):
-           #if self.sprite_direction_switched_right == False:
               sound.play_effect('8ve:8ve-tap-mellow')            
               self.left_button_down = True
-              #self.sprite_direction_switched_right = True
-           #else:
-              #sound.play_effect('8ve:8ve-tap-mellow', 50)
-              #self.robber.remove_from_parent()
-              
-             # self.robber = SpriteNode('./assets/sprites/boy_thief.PNG',
-                                    #  parent = self,
-                                    #  position = self.robber_position, 
-                                    #  scale = 0.11)
-              #self.sprite_direction_switched_right == False                         
-             # self.left_button_down = True                                                               
-                               
+              self.character_turned_left()  
+                                                                                                                
         if self.right_button.frame.contains_point(touch.location):
-           #if self.sprite_direction_switched_right == True:
               sound.play_effect('8ve:8ve-tap-mellow')            
-              self.right_button_down = True                                                                               
-           #else:
-               #sound.play_effect('8ve:8ve-tap-mellow', 50)
-              # self.robber.remove_from_parent()
-              # SettingsScene.GenderType = './assets/sprites/boy_thief_right.PNG'
-             #  self.robber = SpriteNode('./assets/sprites/boy_thief_right.PNG',
-                              #         parent = self, 
-                             #          position = self.robber_position,
-                          #             scale = 0.11)                
-              # self.sprite_direction_switched_right = True       
-              # self.right_button_down = True                                   
+              self.right_button_down = True 
+              self.character_turned_right()                                                                                                        
                          
         if self.down_button.frame.contains_point(touch.location):
            sound.play_effect('8ve:8ve-tap-mellow')
@@ -306,7 +271,7 @@ class MainGameScene(Scene):
     
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
-        
+              
         # If finger is removed then no matter what, robber should not move
         self.left_button_down = False
         self.right_button_down = False
@@ -338,7 +303,8 @@ class MainGameScene(Scene):
            elif self.home_button_game_scene.frame.contains_point(touch.location): 
               config.main_game_music.stop()   
               sound.play_effect('8ve:8ve-tap-mellow')       
-              self.present_modal_scene(MainMenuScene())
+              config.home_menu_pressed = True
+              self.dismiss_modal_scene()
            # This transitions to levels_scene      
            elif self.levels_button.frame.contains_point(touch.location):	
               config.main_game_music.stop() 
@@ -446,7 +412,7 @@ class MainGameScene(Scene):
         self.back_arrow_button = SpriteNode('./assets/sprites/back_arrow_button.PNG',
                                             parent = self, 
                                             position = back_arrow_button_position,
-                                            scale = 0.25) 
+                                            scale = 0.6) 
                                             
         # This shows settings button                                  
         settings_button_position = Vector2()
@@ -475,20 +441,57 @@ class MainGameScene(Scene):
                                         position = levels_button_position,
                                         scale = 0.35)        
                                         
-def character_turned_left(self):
-	
-    self.robber.removed_from_parent()       
+    def character_turned_left(self):	
+    # This shows the character facing left
     
-    self.robber = SpriteNode('./assets/sprites/boy_thief_right.PNG',
+        self.robber.remove_from_parent()    
+    
+        new_robber_position = self.robber.position        
+        self.robber = SpriteNode(self.character_gender,
                                  parent = self, 
-                                 position = self.robber_position,
+                                 position = new_robber_position,
                                  scale = 0.11)        
                                  
-def character_turned_right(self):
-	
-    self.robber.removed_from_parent()       
+    def character_turned_right(self):
+    # This shows the character facing right
     
-    self.robber = SpriteNode(self.character_gender,
-                                 parent = self, 
-                                 position = self.robber_position,
-                                 scale = 0.11)                                                                                                                                 
+        self.robber.remove_from_parent()       
+    
+        new_robber_position = self.robber.position
+        if config.gender_type == './assets/sprites/boy_thief.PNG':    
+           self.robber = SpriteNode('./assets/sprites/boy_thief_right.PNG',
+                                    parent = self, 
+                                    position = new_robber_position,
+                                    scale = 0.11)              
+        else:
+           self.robber = SpriteNode('./assets/sprites/girl_thief_right.PNG',
+                                    parent = self, 
+                                    position = new_robber_position,
+                                    scale = 0.11)#097)                 
+                                    
+    def create_bush_and_coins(self):	
+        # This creates hearts sprite in which each heart is evenly spaced out
+        for counter in range(0,3):
+            self.create_heart() 
+            self.increment = self.increment + 60        
+            
+          # This creates bush and coin sprites in which each bush and coin pair is spaced out proportionately                                                                    
+        for counter in range(0,config.level_difficulty):
+            self.create_bush()  
+            self.create_coin()  
+            
+        outer_loop_counter = 0
+        inner_loop_counter = 0
+        while outer_loop_counter < len(self.bushes):
+              inner_loop_counter = outer_loop_counter + 1
+              while inner_loop_counter < len(self.bushes):              
+                     while    self.bushes[outer_loop_counter].frame.intersects(self.bushes[inner_loop_counter].frame) or self.coins[outer_loop_counter].frame.intersects(self.bushes[inner_loop_counter].frame):                         
+                          self.bushes[outer_loop_counter].remove_from_parent()
+                          self.coins[outer_loop_counter].remove_from_parent()
+                          self.bushes.remove(self.bushes[outer_loop_counter])
+                          self.coins.remove(self.coins[outer_loop_counter])
+                          self.create_bush()
+                          self.create_coin()                         
+                     inner_loop_counter += 1
+              outer_loop_counter += 1
+                                                                                                                                                                                                                                                                                                        

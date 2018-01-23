@@ -1,4 +1,4 @@
-# Created by:Sidney Kang
+# Created by:Shuvaethy Neill
 # Created on: Jan 2018
 # Created for: ICS3U
 # This scene shows the winning scene.
@@ -9,7 +9,7 @@ import sound
 import time
 import ui
 
-#from levels_scene import *
+from transition_scene import *
 
 class WinScene(Scene):
     def setup(self):
@@ -65,8 +65,10 @@ class WinScene(Scene):
 
     def update(self):
         # this method is called, hopefully, 60 times a second
-        pass
-    
+                   
+        if config.game_over == True or config.game_won == True:
+           self.dismiss_modal_scene()          
+           
     def touch_began(self, touch):
         # this method is called, when user touches the screen
         pass
@@ -81,15 +83,8 @@ class WinScene(Scene):
         
         # This transitions to level scene
         if self.next_arrow_button.frame.contains_point(touch.location):
-           sound.play_effect('8ve:8ve-tap-mellow')           
-           if config.level_difficulty != 5:
-              #config.level_difficulty = config.level_difficulty + 1
-              config.game_won = True
-              #self.present_modal_scene(LevelsScene())
-              self.dismiss_modal_scene()
-           else:
-              config.game_over = True
-              self.dismiss_modal_scene()
+           sound.play_effect('8ve:8ve-tap-mellow')    
+           self.present_modal_scene(TransitionScene())                      
 
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen
