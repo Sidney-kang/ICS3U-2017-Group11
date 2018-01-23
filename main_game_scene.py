@@ -75,8 +75,9 @@ class MainGameScene(Scene):
         self.table_view_button = SpriteNode('./assets/sprites/table_view_button.PNG',
                                             parent = self, 
                                             position = table_view_button_position,
-                                            scale = 0.25)                                                                                                     
-        self.create_bush_and_coins()                
+                                            scale = 0.25)    
+                                                                                                                                             
+        self.create_bush_and_coins()                    
                                                                                                                    
         # Creates robber sprite                                                           
         self.robber_position = Vector2()
@@ -165,7 +166,6 @@ class MainGameScene(Scene):
             
         # Every update it randomly check if new missiles should be created
         missile_create_chance = random.randint(1,30)
-        
         if missile_create_chance <= self.police_attack_rate and self.stop_missiles == False:
            self.create_new_missile() 
            self.heart_removed = False
@@ -450,9 +450,10 @@ class MainGameScene(Scene):
                                         scale = 0.35)        
                                         
     def character_turned_left(self):	
-        # This shows the character facing left
+       # This shows the character facing left
+    
         self.robber.remove_from_parent()    
-
+    
         new_robber_position = self.robber.position        
         self.robber = SpriteNode(self.character_gender,
                                  parent = self, 
