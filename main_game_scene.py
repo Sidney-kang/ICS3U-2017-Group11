@@ -491,5 +491,4 @@ class MainGameScene(Scene):
                           self.create_bush()
                           self.create_coin()                         
                      inner_loop_counter += 1
-              outer_loop_counter += 1
-                                                                                                                                                                                                                                                                                                        
+              outer_loop_counter += 1                                                                                                                                                                                                                                                                                                    
